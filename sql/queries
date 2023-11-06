@@ -20,3 +20,8 @@ LOAD DATA INFILE 'COVID-19 Vaccine data by Public Health Unit (PHU) and by age -
 INTO TABLE ONCOVID19vaccine
 FIELDS TERMINATED BY ','
 IGNORE 1 ROWS;
+
+/* rename column */
+
+alter table ONCOVID19testing
+rename column `PHU_num` TO `PHU ID`;
