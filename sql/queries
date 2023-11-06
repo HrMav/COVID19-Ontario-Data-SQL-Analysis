@@ -1,1 +1,22 @@
+/* create table */
 
+CREATE TABLE `opendata`.`ONCOVID19testing` (`﻿_id` int, `DATE` date, `PHU_num` int, 
+`PHU_name` text, `percent_positive_7d_avg` double, `test_volumes_7d_avg` int, `tests_per_1000_7d_avg` 
+double, `percent_complete_nextday_7d_avg` double, `percent_complete_2days_7d_avg` double);
+
+CREATE TABLE `opendata`.`ONCOVID19vaccine` (`_id` int, `Date` date, 
+`PHU ID` int, `PHU name` text, `Agegroup` text, `At least one dose_cumulative` int, `Second_dose_cumulative` int, 
+`fully_vaccinated_cumulative` int, `third_dose_cumulative` int, `Total population` int, `Percent_at_least_one_dose` double, 
+`Percent_fully_vaccinated` double, `Percent_3doses` double);
+
+/* bulk upload csv files */
+
+LOAD DATA INFILE 'Ontario COVID-19 testing metrics by Public Health Unit (PHU) - Corrected.csv' 
+INTO TABLE ONCOVID19testing
+FIELDS TERMINATED BY ','
+IGNORE 1 ROWS;
+
+LOAD DATA INFILE 'COVID-19 Vaccine data by Public Health Unit (PHU) and by age - Dates Fixed.csv' 
+INTO TABLE ONCOVID19vaccine
+FIELDS TERMINATED BY ','
+IGNORE 1 ROWS;
