@@ -36,3 +36,11 @@ FROM ONCOVID19vaccine;
 SELECT Agegroup, AVG(Percent_at_least_one_dose)
 FROM ONCOVID19vaccine
 GROUP BY Agegroup;
+
+/* Find the highest number of third doses administered in a single PHU */
+
+SELECT `PHU name`, max(third_dose_cumulative) as MaxThirdDose
+FROM ONCOVID19vaccine
+GROUP BY `PHU name`
+ORDER BY MaxThirdDose DESC
+LIMIT 5;
