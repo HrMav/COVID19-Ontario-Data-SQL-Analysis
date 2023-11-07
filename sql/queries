@@ -25,3 +25,14 @@ IGNORE 1 ROWS;
 
 alter table ONCOVID19testing
 rename column `PHU_num` TO `PHU ID`;
+
+/* Lets start with basic SQL queries */
+
+SELECT COUNT(*)
+FROM ONCOVID19vaccine;
+
+/* Get the average percentage of people with at least one dose by age group */
+
+SELECT Agegroup, AVG(Percent_at_least_one_dose)
+FROM ONCOVID19vaccine
+GROUP BY Agegroup;
