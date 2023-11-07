@@ -44,3 +44,11 @@ FROM ONCOVID19vaccine
 GROUP BY `PHU name`
 ORDER BY MaxThirdDose DESC
 LIMIT 5;
+
+/* Find the PHU with the highest test per 1000 people average */
+
+SELECT `PHU_name`, MAX(tests_per_1000_7d_avg) as MaxTestsPerThousand
+FROM ONCOVID19testing
+GROUP BY `PHU_name`
+ORDER BY MaxTestsPerThousand DESC
+LIMIT 1;
