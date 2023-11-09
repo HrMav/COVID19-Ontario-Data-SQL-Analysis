@@ -134,3 +134,17 @@ GROUP BY
 ORDER BY 
     TotalTests DESC
 LIMIT 10;
+
+/* Join the vaccine and testing tables on the PHU ID and get the total vaccine doses and test volumes for each PHU */
+
+SELECT 
+    v.`PHU ID`, 
+    v.`PHU name`, 
+    SUM(v.`fully_vaccinated_cumulative`) as TotalVaccinated,
+    SUM(t.`test_volumes_7d_avg`) as TotalTests
+FROM 
+    ONCOVID19vaccine v
+JOIN 
+    ONCOVID19testing t ON v.`PHU ID` = t.`PHU ID`
+GROUP BY 
+    v.`PHU ID`, v.`PHU name`;
