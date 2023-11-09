@@ -52,3 +52,30 @@ FROM ONCOVID19testing
 GROUP BY `PHU_name`
 ORDER BY MaxTestsPerThousand DESC
 LIMIT 1;
+
+/* Find PHUs with the lowest percentage of fully vaccinated people and display the relevant details */
+
+SELECT 
+    `PHU ID`, 
+    `PHU name`, 
+    MIN(Percent_fully_vaccinated) as LowestVaccinationRate
+FROM 
+    ONCOVID19vaccine
+GROUP BY 
+    `PHU ID`, `PHU name`
+ORDER BY 
+    LowestVaccinationRate ASC
+LIMIT 10;
+
+/* Calculate the total number of vaccinated individuals by age group for the latest date in the dataset */
+
+SELECT 
+    Agegroup, 
+    SUM(`At least one dose_cumulative`) as TotalAtLeastOneDose,
+    SUM(`fully_vaccinated_cumulative`) as TotalFullyVaccinated
+FROM 
+    ONCOVID19vaccine
+WHERE 
+    Date = (SELECT MAX(Date) FROM ONCOVID19vaccine)
+GROUP BY 
+    Agegroup;
