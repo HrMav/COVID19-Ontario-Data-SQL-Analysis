@@ -79,3 +79,13 @@ WHERE
     Date = (SELECT MAX(Date) FROM ONCOVID19vaccine)
 GROUP BY 
     Agegroup;
+
+/* Rank the PHUs by the percentage of fully vaccinated individuals using a window function */
+
+SELECT 
+    `PHU ID`, 
+    `PHU name`, 
+    `Percent_fully_vaccinated`,
+    RANK() OVER (ORDER BY `Percent_fully_vaccinated` DESC) as VaccinationRank
+FROM 
+    ONCOVID19vaccine;
