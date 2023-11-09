@@ -89,3 +89,48 @@ SELECT
     RANK() OVER (ORDER BY `Percent_fully_vaccinated` DESC) as VaccinationRank
 FROM 
     ONCOVID19vaccine;
+
+/* Get the average test positivity rate for each PHU, only including days with more than 1000 tests */
+
+SELECT 
+    `PHU_name`, 
+    AVG(percent_positive_7d_avg) as AvgPositivityRate
+FROM 
+    ONCOVID19testing
+WHERE 
+    test_volumes_7d_avg > 1000
+GROUP BY 
+    `PHU_name`;
+
+/* Find PHUs with the greatest improvement in test turnaround time over the dataset's timeframe */
+
+WITH TurnaroundImprovement AS (
+    SELECT 
+        `PHU_name`, 
+        (MAX(percent_complete_nextday_7d_avg) - MIN(percent_complete_nextday_7d_avg)) as Improvement
+    FROM 
+        ONCOVID19testing
+    GROUP BY 
+        `PHU_name`
+)
+SELECT 
+    `PHU_name`, 
+    Improvement
+FROM 
+    TurnaroundImprovement
+ORDER BY 
+    Improvement DESC
+LIMIT 10;
+
+/* Find the dates with the highest number of tests performed across all PHUs */
+
+SELECT 
+    DATE, 
+    SUM(test_volumes_7d_avg) as TotalTests
+FROM 
+    ONCOVID19testing
+GROUP BY 
+    DATE
+ORDER BY 
+    TotalTests DESC
+LIMIT 10;
